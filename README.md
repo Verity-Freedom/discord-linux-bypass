@@ -12,6 +12,8 @@
 ## Использование
 Необходимо указать переменную `LD_PRELOAD` перед запуском Discord для того, чтобы процесс Discord загрузил библиотеку.
 Эта библиотека обходит только ограничения голосовых каналов. Для всего остального нужен прокси-сервер.
+
+Скачайте библиотеку со страницы [Releases](https://github.com/nik9play/discord-linux-bypass/releases).
 ```bash
 LD_PRELOAD=<путь_до_библиотеки>/libdiscordbypass.so discord --proxy-server=<прокси_url>
 ```
