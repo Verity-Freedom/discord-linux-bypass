@@ -1,2 +1,4 @@
 .vscode
-libdiscordbypass.so
+*.so
+*.tar.gz
+*.o
