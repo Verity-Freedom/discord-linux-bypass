@@ -51,15 +51,15 @@ static inline int get_int_from_env(
 }
 
 static int delay;
-static int fake_pakets;
+static int fake_packets;
 
 __attribute__((constructor))
 static void init_lib(void) {
     delay = get_int_from_env("BYPASS_DELAY", 50, 0, 1000);
     printf("[discord_linux_bypass] set delay to %dms\n", delay);
 
-    fake_pakets = get_int_from_env("BYPASS_FAKE_PAKETS", 2, 0, 20);
-    printf("[discord_linux_bypass] set fake pakets to %d\n", fake_pakets);
+    fake_packets = get_int_from_env("BYPASS_FAKE_PACKETS", 2, 0, 20);
+    printf("[discord_linux_bypass] set fake packets to %d\n", fake_packets);
 }
 
 // used in custom clients
@@ -77,7 +77,7 @@ ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,
     socket_entry_t *sock_entry = NULL;
     if (!sm_was_sent(sockfd, &sock_entry) && sock_entry != NULL) {
         if (len == CUSTOM_PACKET_SIZE) {
-            for (int i = 0; i < fake_pakets; i++) {
+            for (int i = 0; i < fake_packets; i++) {
                 char payload = i % 2;
                 real_sendto(sockfd, &payload, 1, 0, dest_addr, addrlen);
             }
@@ -119,7 +119,7 @@ ssize_t sendmsg(int sockfd, const struct msghdr *msg, int flags) {
             new_msg.msg_flags = 0;
             new_msg.msg_iovlen = 1;
 
-            for (int i = 0; i < fake_pakets; i++) {
+            for (int i = 0; i < fake_packets; i++) {
                 char payload = i % 2;
                 struct iovec iov = { .iov_base = &payload, .iov_len = 1 };
 
